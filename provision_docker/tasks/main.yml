@@ -14,16 +14,16 @@
   shell: "docker inspect --format '{{ '{{' }} .NetworkSettings.IPAddress {{ '}}' }}' {{ item }}"
   register: provision_docker_ip
   with_items:
-    - "{{ docker_hostname }}"
+    - "{{ docker_container }}"
 
 - name: Debug
   debug:
     var: provision_docker_ip
 
-- name: "Add docker hosts with connection docker"
+- name: "Add docker hosts with connection to docker container"
   add_host:
     module: add_host
-    name: "{{ docker_hostname }}"
+    name: "{{ docker_container }}"
     docker_ip: "{{ provision_docker_ip.results[0].stdout }}"
     ansible_connection: docker
     ansible_user: root
