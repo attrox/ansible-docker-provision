@@ -4,8 +4,6 @@
   gather_facts: true
   vars:
     docker_container: "dev-test"
-    ssh_user: "root"
-    ssh_password: "docker.io"
   roles:
     - provision_docker
 
