@@ -4,6 +4,8 @@
 - name: Setup docker container using local docker-compose
   docker_service:
     project_src: "{{ role_path }}/files/"
+  environment:
+    docker_container: "{{ docker_container }}"
   register: output
 
 - name: Debug docker build output

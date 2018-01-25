@@ -5,5 +5,5 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: dev-test
+    container_name: ${docker_container}
     network_mode: bridge
