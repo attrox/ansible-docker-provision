@@ -1,0 +1,9 @@
+version: '3'
+services:
+  dev-test:
+    privileged: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dev-test
+    network_mode: bridge

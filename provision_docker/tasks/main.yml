@@ -1,0 +1,30 @@
+---
+# tasks file for provision_docker
+
+- name: Setup docker container using local docker-compose
+  docker_service:
+    project_src: .
+  register: output
+
+- name: Debug docker build output
+  debug:
+    var: output
+
+- name: Get IP of the container
+  shell: "docker inspect --format '{{ '{{' }} .NetworkSettings.IPAddress {{ '}}' }}' {{ item }}"
+  register: provision_docker_ip
+  with_items:
+    - "{{ docker_hostname }}"
+
+- name: Debug
+  debug:
+    var: provision_docker_ip
+
+- name: "Add docker hosts with connection docker"
+  add_host:
+    module: add_host
+    name: "{{ docker_hostname }}"
+    docker_ip: "{{ provision_docker_ip.results[0].stdout }}"
+    ansible_connection: docker
+    ansible_user: root
+  changed_when: false

@@ -1,0 +1,14 @@
+---
+- name: Bring up docker container locally
+  hosts: localhost
+  gather_facts: true
+  vars:
+    docker_hostname: "dev-test"
+  roles:
+    - provision_docker
+
+- name: Perform tasks against the registered docker container
+  hosts: "dev-test"
+  tasks:
+    - ping:
+    - shell: echo "Hello World!" > /root/helloworld.txt
